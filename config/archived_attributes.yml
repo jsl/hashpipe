@@ -1,0 +1,5 @@
+test:
+    storage: filesystem
+
+development:
+    storage: s3
