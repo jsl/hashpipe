@@ -1,5 +1,7 @@
 require File.expand_path(File.join(File.dirname(__FILE__), %w[archived_attributes archived_attribute] ))
 
+require 'uuid'
+
 module ArchivedAttributes
 
   def self.included(base)
@@ -9,6 +11,7 @@ module ArchivedAttributes
   module SingletonMethods
 
     def archived_attribute(*args)
+      before_save :generate_uuid
       before_save :save_archived_attributes
       # before_destroy :destroy_attached_files
 
@@ -65,6 +68,10 @@ module ArchivedAttributes
       each_archived_stash do |name, stash|
         stash.__send__(:save)
       end
+    end
+
+    def generate_uuid
+      self.uuid = UUID.new.generate
     end
 
   end

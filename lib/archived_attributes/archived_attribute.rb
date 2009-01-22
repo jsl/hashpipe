@@ -22,18 +22,16 @@ module ArchivedAttributes
       @instance = instance
 
       @options = self.class.default_options.merge(options)
-
-      file_path = File.join(@options[:path], @instance.class.to_s.downcase, @name.to_s)
       
       @backend = 
         "ArchivedAttributes::Backends::#{@options[:storage].to_s.camelize}".
-        constantize.new(file_path)
+        constantize.new
       
       @dirty = false
     end
 
     def value
-      defined?(@stashed_value) ? @stashed_value : @backend.load
+      defined?(@stashed_value) ? @stashed_value : @backend.load(self)
     end
 
     def value=(other)
@@ -45,8 +43,11 @@ module ArchivedAttributes
       @dirty
     end
 
+    # First saves this record to the back-end, and only saves this record if
+    # the back-end store is successful.  If it is successful, it will return
+    # a UUID that we store in the key for this attribute.
     def save
-      @backend.save(@stashed_value) if self.dirty?
+      @backend.save(@stashed_value, self) if self.dirty?
     end
 
   end

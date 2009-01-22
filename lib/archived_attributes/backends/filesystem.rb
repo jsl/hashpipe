@@ -1,21 +1,28 @@
-smodule ArchivedAttributes
+module ArchivedAttributes
   module Backends
     
-    class Filesystem      
-      def initialize(path)
-        @path = path
-        FileUtils.mkdir_p(path) unless File.exist?(path)
-      end
+    class Filesystem  
 
       # Saves content and returns unique hash
-      def save(content)
-        File.open(File.join(@path, 'foo.txt'), 'w') {|f| f.write(content) }
-        MD5.hexdigest(content + DateTime.now.to_s)
+      def save(content, archived_attribute)
+        path = path_from(archived_attribute)
+        FileUtils.mkdir_p(path) unless File.exist?(path)
+
+        file = file_from(archived_attribute)
+        File.open(File.join(path, file), 'w') { |f| f.write(content) }
       end
 
-      def load
-        puts "loading data in #{@path}/foo.txt"
-        File.read(File.join(@path, 'foo.txt'))
+      def load(archived_attribute)
+        File.read(File.join(path_from(archived_attribute), file_from(archived_attribute)))
+      end
+
+      private
+      def path_from(archived_attribute)
+        [archived_attribute.class.to_s.tableize, archived_attribute.instance.uuid].join('/')
+      end
+
+      def file_from(archived_attribute)
+        archived_attribute.name.to_s
       end
     end
     

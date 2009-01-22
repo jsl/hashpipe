@@ -15,6 +15,7 @@ ActiveRecord::Migration.verbose = false
 ActiveRecord::Base.silence do
   ActiveRecord::Schema.define do
     create_table :stories do |table|
+      table.string :uuid
       table.string :title
       table.string :content_key
       table.string :description_key
