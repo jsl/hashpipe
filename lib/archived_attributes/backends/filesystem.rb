@@ -13,12 +13,15 @@ module ArchivedAttributes
       end
 
       def load(archived_attribute)
-        File.read(File.join(path_from(archived_attribute), file_from(archived_attribute)))
+        File.read( File.join(path_from(archived_attribute),
+            file_from(archived_attribute) ) )
       end
 
       private
+
       def path_from(archived_attribute)
-        [archived_attribute.class.to_s.tableize, archived_attribute.instance.uuid].join('/')
+        [ archived_attribute.class.to_s.tableize,
+          archived_attribute.instance.uuid ].join('/')
       end
 
       def file_from(archived_attribute)
