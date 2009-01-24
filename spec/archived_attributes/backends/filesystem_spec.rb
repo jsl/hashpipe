@@ -6,16 +6,16 @@ describe ArchivedAttributes::Backends::Filesystem do
       :uuid => '63d3a120-caca-012b-d468-002332d4f91e'
     )
 
-    @aa = ArchivedAttributes::ArchivedAttribute.new(:content, @instance)
-    @fs = ArchivedAttributes::Backends::Filesystem.new
+    aa = ArchivedAttributes::ArchivedAttribute.new(:content, @instance)
+    @fs = ArchivedAttributes::Backends::Filesystem.new(aa)
   end
 
   it "should write to a path under tmp/" do
-    @fs.__send__(:path_from, @aa).should =~ /tmp/
+    @fs.__send__(:file_path).should =~ /tmp/
   end
 
   it "should save the file to path" do
-    @fs.save('test', @aa)
+    @fs.save('test')
   end
   
 end

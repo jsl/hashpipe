@@ -1,5 +1,4 @@
 require 'activesupport'
-require 'md5'
 
 require File.expand_path(File.join(File.dirname(__FILE__),  %w[ backends filesystem ]))
 require File.expand_path(File.join(File.dirname(__FILE__),  %w[ backends s3 ]))
@@ -25,13 +24,13 @@ module ArchivedAttributes
       
       @backend = 
         "ArchivedAttributes::Backends::#{@options[:storage].to_s.camelize}".
-        constantize.new
+        constantize.new(self)
       
       @dirty = false
     end
 
     def value
-      defined?(@stashed_value) ? @stashed_value : @backend.load(self)
+      defined?(@stashed_value) ? @stashed_value : @backend.load
     end
 
     def value=(other)
@@ -43,11 +42,10 @@ module ArchivedAttributes
       @dirty
     end
 
-    # First saves this record to the back-end, and only saves this record if
-    # the back-end store is successful.  If it is successful, it will return
-    # a UUID that we store in the key for this attribute.
+    # First saves this record to the back-end.  If backend storage raises an
+    # error, we capture it and add it to the AR validation errors.
     def save
-      @backend.save(@stashed_value, self) if self.dirty?
+      @backend.save(@stashed_value) if self.dirty?
     end
 
   end

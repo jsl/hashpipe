@@ -1,31 +1,38 @@
 module ArchivedAttributes
   module Backends
     
-    class Filesystem  
+    class Filesystem
 
-      # Saves content and returns unique hash
-      def save(content, archived_attribute)
-        path = path_from(archived_attribute)
-        FileUtils.mkdir_p(path) unless File.exist?(path)
-
-        file = file_from(archived_attribute)
-        File.open(File.join(path, file), 'w') { |f| f.write(content) }
+      def initialize(archived_attribute)
+        @archived_attribute = archived_attribute
       end
 
-      def load(archived_attribute)
-        File.read( File.join( path_from(archived_attribute),
-            file_from(archived_attribute) ) )
+      def save(content)
+        FileUtils.mkdir_p(file_path) unless File.exist?(file_path)
+        File.open(file_full_name, 'w') { |f| f.write(content) }
+      end
+
+      def load
+        File.read( file_full_name )
       end
 
       private
 
-      def path_from(archived_attribute)
-        %W[ #{File.dirname(__FILE__)} .. .. .. tmp archived_attributes
-            #{archived_attribute.instance.uuid} ].join('/')
+      # Returns the full file path + name of this archived attribute
+      def file_full_name
+        File.join(file_path, file_name)
       end
 
-      def file_from(archived_attribute)
-        archived_attribute.name.to_s
+      # Returns the file path of this archived attribute, without the file name.
+      def file_path
+        %W[ #{File.dirname(__FILE__)} .. .. .. tmp archived_attributes
+            #{@archived_attribute.instance.uuid} ].join('/')
+      end
+
+
+      # Returns the file name of this archived attribute
+      def file_name
+        @archived_attribute.name.to_s
       end
     end
     
