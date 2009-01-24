@@ -8,32 +8,38 @@ module ArchivedAttributes
       end
 
       def save(content)
-        FileUtils.mkdir_p(file_path) unless File.exist?(file_path)
-        File.open(file_full_name, 'w') { |f| f.write(content) }
+        create_filesystem_path unless File.exist?(filepath)
+        write_to_disk(content)
       end
 
       def load
-        File.read( file_full_name )
+        File.read( filename )
+      end
+
+      # Returns the full file path + name of this archived attribute
+      def filename
+        File.join(filepath, @archived_attribute.name.to_s)
       end
 
       private
 
-      # Returns the full file path + name of this archived attribute
-      def file_full_name
-        File.join(file_path, file_name)
+      # Writes content to disk, or raises an error if the content is unable to
+      # be saved
+      def write_to_disk(content)
+        File.open(filename, 'w') { |f| f.write(content) }
+      end
+
+      def create_filesystem_path
+        FileUtils.mkdir_p(filepath)
       end
 
       # Returns the file path of this archived attribute, without the file name.
-      def file_path
-        %W[ #{File.dirname(__FILE__)} .. .. .. tmp archived_attributes
-            #{@archived_attribute.instance.uuid} ].join('/')
+      def filepath
+        File.expand_path(%W[ #{File.dirname(__FILE__)} .. .. .. tmp
+          archived_attributes #{@archived_attribute.instance.uuid} ].
+            join('/'))
       end
 
-
-      # Returns the file name of this archived attribute
-      def file_name
-        @archived_attribute.name.to_s
-      end
     end
     
   end
