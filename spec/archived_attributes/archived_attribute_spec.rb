@@ -6,10 +6,10 @@ require File.expand_path(File.join(File.dirname(__FILE__), %w[.. .. lib archived
 
 describe ArchivedAttributes::ArchivedAttribute do
   before do
-    options = {}
+    options = { 'storage' => :filesystem }
     @aa = ArchivedAttributes::ArchivedAttribute.new(Object, Object.new, options)
   end
-  
+
   describe "#dirty?" do
     it "should return false when a value has not been set" do
       @aa.should_not be_dirty

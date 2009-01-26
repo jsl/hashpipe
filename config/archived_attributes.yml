@@ -1,5 +1,14 @@
 test:
-    storage: filesystem
-
+    storage: s3
+    s3:
+        bucket: test_archived_attributes
+        access_key: your access key
+        secret_key: your secret key
+        protocol: https
+        
 development:
     storage: s3
+    s3:
+        bucket: development_archived_attributes
+        access_key: your access key
+        secret_key: your secret key

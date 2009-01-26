@@ -1,4 +1,5 @@
 require File.expand_path(File.join(File.dirname(__FILE__), %w[archived_attributes archived_attribute] ))
+require File.expand_path(File.join(File.dirname(__FILE__), %w[archived_attributes global_configuration] ))
 
 require 'uuid'
 
@@ -20,7 +21,10 @@ module ArchivedAttributes
       options = args.extract_options!
       options.reverse_merge! :marshalled => false
 
-      write_inheritable_attribute(:archived_attribute_definitions, {}) if archived_attribute_definitions.nil?
+      if archived_attribute_definitions.nil?
+        write_inheritable_attribute(:archived_attribute_definitions, {})
+      end
+      
       archived_attribute_definitions[attribute] = options
 
       self.__send__(:include, InstanceMethods)
@@ -38,14 +42,6 @@ module ArchivedAttributes
     # has_attached_file.
     def archived_attribute_definitions
       read_inheritable_attribute(:archived_attribute_definitions)
-    end
-
-    private
-
-    def archived_attribute_configuration
-      YAML.load_file(
-        File.join( RAILS_ROOT, 'config', 'archived_attributes.yml' )
-      )[RAILS_ENV]
     end
 
   end

@@ -8,7 +8,6 @@ describe ArchivedAttributes::Backends::Filesystem do
       :uuid => '63d3a120-caca-012b-d468-002332d4f91e'
     )
 
-    @content = 'some test content'
     aa = ArchivedAttributes::ArchivedAttribute.new(@content, @instance)
     @fs = ArchivedAttributes::Backends::Filesystem.new(aa)
   end

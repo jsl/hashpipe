@@ -8,25 +8,14 @@ module ArchivedAttributes
   class ArchivedAttribute
     attr_accessor :name, :instance, :options
 
-
-    def self.default_options
-      {
-        :storage  => :filesystem,
-        :path     => File.join( File.dirname(__FILE__), %w[ .. .. tmp archived_attribute ] )
-      }
-    end
-
     def initialize(name, instance, options = {})
       @name     = name
       @instance = instance
+      @dirty    = false
 
-      @options = self.class.default_options.merge(options)
-      
-      @backend = 
-        "ArchivedAttributes::Backends::#{@options[:storage].to_s.camelize}".
-        constantize.new(self)
-      
-      @dirty = false
+      opts = ArchivedAttributes::GlobalConfiguration.instance.to_hash.merge(options)
+
+      @backend = instantiate_backend_from(opts)
     end
 
     def value
@@ -46,6 +35,12 @@ module ArchivedAttributes
     # error, we capture it and add it to the AR validation errors.
     def save
       @backend.save(@stashed_value) if self.dirty?
+    end
+
+    # Returns a backend object based on the options given (e.g., filesystem, s3).
+    def instantiate_backend_from(options)
+      "ArchivedAttributes::Backends::#{options['default_storage'].to_s.camelize}".
+        constantize.new(self)
     end
 
   end
