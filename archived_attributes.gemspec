@@ -21,7 +21,7 @@ Gem::Specification.new do |s|
   ]
   s.test_files = [
     "spec/archived_attributes/global_configuration_spec.rb",
-    "spec/archived_attributes/archived_attributes_spec.rb",
+    "spec/archived_attributes/archived_attribute_spec.rb",
     "spec/archived_attributes/backends/filesystem_spec.rb",
     "spec/archived_attributes/backends/s3_spec.rb"
   ]
