@@ -14,6 +14,8 @@ describe ArchivedAttributes::Backends::Filesystem do
     @fs = ArchivedAttributes::Backends::Filesystem.new(aa)
   end
 
+  it "should clean up filesystem after tests are run"
+
   it "should write to the correct path" do
     @fs.__send__(:filepath).should ==
       File.expand_path(File.join(@path, @instance.uuid))
