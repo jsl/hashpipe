@@ -1,32 +1,53 @@
 require File.join(File.dirname(__FILE__), %w[ .. .. spec_helper ])
 
+require 'tmpdir'
+
 describe ArchivedAttributes::Backends::Filesystem do
 
   before do
+    @unique_path_part = 'archived_attributes_test'
+    @path = File.join(Dir.tmpdir, @unique_path_part)
+    
+    
     @instance = stub('http_retrieval',
-      :uuid => '63d3a120-caca-012b-d468-002332d4f91e'
+      :uuid => '63d3a120-caca-012b-d468-002332d4f91e',
+      :name => :foo
     )
 
-    @path = '/tmp/archived_attributes'
-    aa = ArchivedAttributes::ArchivedAttribute.new(@content, @instance,
+    aa = ArchivedAttributes::ArchivedAttribute.new(:content, @instance,
       :path => @path)
     
     @fs = ArchivedAttributes::Backends::Filesystem.new(aa)
   end
 
-  it "should clean up filesystem after tests are run"
-
   it "should write to the correct path" do
     @fs.__send__(:filepath).should ==
-      File.expand_path(File.join(@path, @instance.uuid))
+      File.expand_path(File.join(@path, 'content', @instance.uuid))
   end
 
-  describe "#save" do
-    it "should call methods to create path and save file to disk" do
-      @fs.expects(:write_to_disk).returns(true)
-      @fs.expects(:create_filesystem_path).returns(true)
-      @fs.save('test')
+  describe "#save" do    
+    before do
+      if File.exist?(@path)
+        err = <<-EOS
+          Test directory #{@path} already exists.  Please remove it and run the
+          test suite again.
+        EOS
+        raise RuntimeError, err
+      else
+        @remove_path = true
+        FileUtils.mkdir(@path)
+      end
     end
+
+    it "should call methods to create path and save file to disk" do
+      @fs.save('test')
+      File.exist?(@fs.filename).should be_true
+    end
+    
+    after(:all) do
+      FileUtils.rm_rf(@path) if @remove_path
+    end
+    
   end
 
 end

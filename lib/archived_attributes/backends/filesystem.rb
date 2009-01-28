@@ -33,11 +33,16 @@ module ArchivedAttributes
         FileUtils.mkdir_p(filepath)
       end
 
-      # Returns the file path of this archived attribute, without the file name.
+      # The file path used for archiving this attribute.  Includes either the
+      # options[:path] attribute, if available, or the RAILS_ROOT path + tmp.
+      # Also includes the name of the attribute for namespacing.
       def filepath
-        File.expand_path(%W[ #{@archived_attribute.options[:path]} .. .. .. tmp
-          archived_attributes #{@archived_attribute.instance.uuid} ].
-            join('/'))
+        base_path = @archived_attribute.options[:path] ||
+          File.join(RAILS_ROOT, 'tmp')
+
+        File.expand_path( File.join(base_path,
+            @archived_attribute.name.to_s,
+            @archived_attribute.instance.uuid ))
       end
 
     end
