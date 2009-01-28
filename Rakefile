@@ -1,11 +1,13 @@
-require 'rake'
-require 'rake/rdoctask'
-require 'spec/rake/spectask'
+require 'rubygems'
+require 'spec'
 
-require File.join(File.dirname(__FILE__), %w[ spec spec_helper ])
+require 'rake'
+require 'spec/rake/spectask'
+require 'rake/rdoctask'
 
 desc 'Test the plugin.'
 Spec::Rake::SpecTask.new(:spec) do |t|
+  t.spec_opts  = ["--format", "specdoc", "--colour"]
   t.libs << 'lib'
   t.verbose = true
 end

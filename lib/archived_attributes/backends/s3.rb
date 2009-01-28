@@ -21,7 +21,7 @@ module ArchivedAttributes
       private
 
       def bucket
-        @bucket ||= @s3.bucket(bucket_name, true)
+        @bucket ||= right_aws_s3.bucket(bucket_name, true)
       end
 
       def right_aws_s3        

@@ -1,9 +1,4 @@
-RAILS_ROOT = File.join(File.dirname(__FILE__), '..')  # Fake rails root
-RAILS_ENV = 'test'
-
-require File.join(File.dirname(__FILE__), %w[.. init])
-
-require 'ostruct'
+require File.join(File.dirname(__FILE__),  'spec_helper')
 
 ActiveRecord::Base.establish_connection(
   :adapter => 'sqlite3',

@@ -12,3 +12,7 @@ development:
         bucket: development_archived_attributes
         access_key: your access key
         secret_key: your secret key
+
+anotherenv:
+    storage: filesystem
+    path: /tmp/archived_attributes

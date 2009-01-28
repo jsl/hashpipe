@@ -35,7 +35,7 @@ module ArchivedAttributes
 
       # Returns the file path of this archived attribute, without the file name.
       def filepath
-        File.expand_path(%W[ #{File.dirname(__FILE__)} .. .. .. tmp
+        File.expand_path(%W[ #{@archived_attribute.options[:path]} .. .. .. tmp
           archived_attributes #{@archived_attribute.instance.uuid} ].
             join('/'))
       end

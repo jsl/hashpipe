@@ -1,4 +1,4 @@
-require File.expand_path(File.join(File.dirname(__FILE__), %w[.. .. lib archived_attributes]))
+require File.join(File.dirname(__FILE__), %w[ .. spec_helper ])
 
 describe ArchivedAttributes::GlobalConfiguration do
   before do

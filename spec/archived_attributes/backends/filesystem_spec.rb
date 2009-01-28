@@ -1,5 +1,4 @@
-require File.expand_path(File.join(File.dirname(__FILE__),
-    %w[.. .. .. lib archived_attributes]))
+require File.join(File.dirname(__FILE__), %w[ .. .. spec_helper ])
 
 describe ArchivedAttributes::Backends::Filesystem do
 
@@ -8,14 +7,16 @@ describe ArchivedAttributes::Backends::Filesystem do
       :uuid => '63d3a120-caca-012b-d468-002332d4f91e'
     )
 
-    aa = ArchivedAttributes::ArchivedAttribute.new(@content, @instance)
+    @path = '/tmp/archived_attributes'
+    aa = ArchivedAttributes::ArchivedAttribute.new(@content, @instance,
+      :path => @path)
+    
     @fs = ArchivedAttributes::Backends::Filesystem.new(aa)
   end
 
   it "should write to the correct path" do
-    path_start = File.expand_path(File.join(File.dirname(__FILE__),
-        %W[.. .. .. tmp archived_attributes #{@instance.uuid }]))
-    @fs.__send__(:filepath).should == path_start
+    @fs.__send__(:filepath).should ==
+      File.expand_path(File.join(@path, @instance.uuid))
   end
 
   describe "#save" do

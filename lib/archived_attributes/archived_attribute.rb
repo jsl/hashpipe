@@ -6,16 +6,16 @@ require File.expand_path(File.join(File.dirname(__FILE__),  %w[ backends s3 ]))
 module ArchivedAttributes
   
   class ArchivedAttribute
-    attr_accessor :name, :instance, :options
+    attr_reader :name, :instance, :options
 
     def initialize(name, instance, options = {})
       @name     = name
       @instance = instance
       @dirty    = false
 
-      opts = ArchivedAttributes::GlobalConfiguration.instance.to_hash.merge(options)
+      @options = ArchivedAttributes::GlobalConfiguration.instance.to_hash.merge(options)
 
-      @backend = instantiate_backend_from(opts)
+      @backend = instantiate_backend_from(@options)
     end
 
     def value

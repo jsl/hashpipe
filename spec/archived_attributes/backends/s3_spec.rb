@@ -1,5 +1,4 @@
-require File.expand_path(File.join(File.dirname(__FILE__),
-    %w[.. .. .. lib archived_attributes]))
+require File.join(File.dirname(__FILE__), %w[ .. .. spec_helper ])
 
 describe ArchivedAttributes::Backends::S3 do
 
@@ -39,11 +38,26 @@ describe ArchivedAttributes::Backends::S3 do
   end
 
   describe "#load" do
-    it "should call method to load data from s3"
+    it "should call method to load data from s3" do
+      bucket = mock('bucket')
+      bucket.expects(:get).once
+      aws_s3 = mock('aws_s3')
+      aws_s3.expects(:bucket).returns(bucket)
+      @s3.expects(:right_aws_s3).returns(aws_s3)
+      @s3.load
+    end
   end
 
   describe "#save" do
-    it "should have some tests"
+    it "should call method to store data in s3" do
+      bucket = mock('bucket')
+      content = 'hey'
+      bucket.expects(:put).once.with(content)
+      aws_s3 = mock('aws_s3')
+      aws_s3.expects(:bucket).returns(bucket)
+      @s3.expects(:right_aws_s3).returns(aws_s3)
+      @s3.save(content)
+    end
   end
 
   describe "#bucket_name" do
