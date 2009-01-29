@@ -13,7 +13,7 @@ module ArchivedAttributes
       end
 
       def destroy
-        FileUtils.rm(filename)
+        FileUtils.rm_f(filename)
       end
 
       def load
