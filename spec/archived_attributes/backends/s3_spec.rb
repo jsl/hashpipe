@@ -60,6 +60,17 @@ describe ArchivedAttributes::Backends::S3 do
     end
   end
 
+  describe "#destroy" do
+    it "should call method to delete key" do
+      key = mock('key', :delete => true)
+      bucket = mock('bucket', :key => key)
+      aws_s3 = mock('aws_s3')
+      aws_s3.expects(:bucket).returns(bucket)
+      @s3.expects(:right_aws_s3).returns(aws_s3)
+      @s3.destroy
+    end
+  end
+
   describe "#bucket_name" do
     it "should be based on the attribute class and model" do
       @s3.__send__(:bucket_name).should == @config['s3']['bucket']

@@ -37,6 +37,10 @@ module ArchivedAttributes
       @backend.save(@stashed_value) if self.dirty?
     end
 
+    def destroy
+      @backend.destroy
+    end
+
     # Returns a backend object based on the options given (e.g., filesystem, s3).
     def instantiate_backend_from(options)
       "ArchivedAttributes::Backends::#{options['default_storage'].to_s.camelize}".

@@ -44,4 +44,17 @@ describe ArchivedAttributes do
   it "should still be able to retrieve the same content for the attribute after reloading" do
     Story.find(@lamb_story.id).content.should == @lamb_text
   end
+
+  [:generate_uuid, :save_archived_attributes, :destroy_archived_attributes].each do |sym|
+    it "should respond to attached storage method #{sym}" do
+      Story.new.should respond_to(sym)
+    end
+  end
+
+  describe "#destroy_archived_attributes" do
+    it "should be called on destruction of object" do
+      @bear_story.expects(:destroy_archived_attributes).at_least_once
+      @bear_story.destroy
+    end
+  end
 end

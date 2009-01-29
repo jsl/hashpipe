@@ -14,6 +14,10 @@ module ArchivedAttributes
         bucket.put(content)
       end
 
+      def destroy
+        bucket.key(key_name).delete
+      end
+
       def load
         bucket.get(key_name)
       end

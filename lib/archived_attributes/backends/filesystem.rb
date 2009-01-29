@@ -12,6 +12,10 @@ module ArchivedAttributes
         write_to_disk(content)
       end
 
+      def destroy
+        FileUtils.rm(filename)
+      end
+
       def load
         File.read( filename )
       end

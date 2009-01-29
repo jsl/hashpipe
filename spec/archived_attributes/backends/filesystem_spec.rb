@@ -50,4 +50,33 @@ describe ArchivedAttributes::Backends::Filesystem do
     
   end
 
+  describe "#destroy" do
+    before do
+      if File.exist?(@path)
+        err = <<-EOS
+          Test directory #{@path} already exists.  Please remove it and run the
+          test suite again.
+        EOS
+        raise RuntimeError, err
+      else
+        @remove_path = true
+        FileUtils.mkdir(@path)
+      end
+    end
+
+    it "should call methods to remove path and file" do
+      @fs.save('test')
+      File.exist?(@fs.filename).should be_true
+
+      @fs.destroy
+      File.exist?(@fs.filename).should be_false
+    end
+
+    after(:all) do
+      FileUtils.rm_rf(@path) if @remove_path
+    end
+
+  end
+
+
 end

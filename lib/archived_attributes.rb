@@ -14,7 +14,7 @@ module ArchivedAttributes
     def archived_attribute(*args)
       before_save :generate_uuid
       before_save :save_archived_attributes
-      # before_destroy :destroy_attached_files
+      before_destroy :destroy_archived_attributes
 
       attribute = args.first
 
@@ -61,8 +61,14 @@ module ArchivedAttributes
     end
 
     def save_archived_attributes
-      each_archived_stash do |name, stash|
+     each_archived_stash do |name, stash|
         stash.__send__(:save)
+      end
+    end
+
+    def destroy_archived_attributes
+      each_archived_stash do |name, stash|
+        stash.__send__(:destroy)
       end
     end
 

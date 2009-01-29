@@ -16,4 +16,12 @@ describe ArchivedAttributes::ArchivedAttribute do
       @aa.should be_dirty
     end
   end
+
+  describe "#destroy" do
+    it "should call destroy on the backend object" do
+      backend = mock('backend', :destroy => true)
+      @aa.instance_variable_set(:'@backend', backend)
+      @aa.destroy
+    end
+  end
 end
