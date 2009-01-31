@@ -2,7 +2,7 @@ require File.join(File.dirname(__FILE__), %w[ .. spec_helper ])
 
 describe ArchivedAttributes::ArchivedAttribute do
   before do
-    options = { 'storage' => :filesystem }
+    options = { :storage => 'filesystem' }
     @aa = ArchivedAttributes::ArchivedAttribute.new(Object, Object.new, options)
   end
 
@@ -27,7 +27,7 @@ describe ArchivedAttributes::ArchivedAttribute do
 
   describe "when options include :marshal" do
     before do
-      options = { 'storage' => :filesystem, 'marshal' => true }
+      options = { :storage => 'filesystem', :marshal => true }
       stub_model = stub(:uuid => '43')
       @aa = ArchivedAttributes::ArchivedAttribute.new(Object, stub_model, options)
     end

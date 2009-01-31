@@ -7,7 +7,7 @@ module ArchivedAttributes
 
       def initialize(archived_attribute)
         @archived_attribute = archived_attribute
-        @config = ArchivedAttributes::GlobalConfiguration.instance['s3']
+        @config = ArchivedAttributes::GlobalConfiguration.instance[:s3]
       end
 
       def save(content)
@@ -30,8 +30,8 @@ module ArchivedAttributes
 
       def right_aws_s3        
         @s3 ||= RightAws::S3.new(
-          @config[:access_key],
-          @config[:secret_key]
+          @config['access_key'],
+          @config['secret_key']
         )
       end
 

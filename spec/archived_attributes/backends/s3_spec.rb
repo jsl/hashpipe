@@ -73,7 +73,7 @@ describe ArchivedAttributes::Backends::S3 do
 
   describe "#bucket_name" do
     it "should be based on the attribute class and model" do
-      @s3.__send__(:bucket_name).should == @config['s3']['bucket']
+      @s3.__send__(:bucket_name).should == @config[:s3]['bucket']
     end
   end
 end

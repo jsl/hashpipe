@@ -6,8 +6,8 @@ module ArchivedAttributes
     include Singleton
 
     DEFAULTS = {
-      'default_storage' => :filesystem,
-      's3' => {
+      :default_storage => :filesystem,
+      :s3 => {
         'protocol' => 'https'
       }
     }
@@ -33,7 +33,7 @@ module ArchivedAttributes
     def load_yaml_configuration
       YAML.load_file(
         File.join( RAILS_ROOT, 'config', 'archived_attributes.yml' )
-      )[RAILS_ENV]
+      )[RAILS_ENV].symbolize_keys
     end
   end
 

@@ -6,15 +6,16 @@ describe ArchivedAttributes::GlobalConfiguration do
   end
 
   it "should read default access key from the configuration file" do
-    @conf['s3']['access_key'].should == 'your access key'
+    puts @conf[:s3]
+    @conf[:s3]['access_key'].should == 'your access key'
   end
 
   it "should the default secret key from configuration" do
-    @conf['s3']['secret_key'].should == 'your secret key'
+    @conf[:s3]['secret_key'].should == 'your secret key'
   end
 
   it "should read the default bucket from the configuration file" do
-    @conf['s3']['bucket'].should == 'test_archived_attributes'
+    @conf[:s3]['bucket'].should == 'test_archived_attributes'
   end
 
   describe "#to_s" do
@@ -31,15 +32,15 @@ describe ArchivedAttributes::GlobalConfiguration do
 
   describe "when an option is not specified in the yaml config file" do
     it "should have a section for s3 options in hash" do
-      @conf['s3'].should_not be_nil
+      @conf[:s3].should_not be_nil
     end
 
     it "should default to https for protocol" do
-      @conf['s3']['protocol'].should == 'https'
+      @conf[:s3]['protocol'].should == 'https'
     end
 
     it "should set default_storage to :filesystem" do
-      @conf['storage'].should == 's3'
+      @conf[:storage].should == 's3'
     end
   end
 
