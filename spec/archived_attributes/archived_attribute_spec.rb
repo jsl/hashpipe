@@ -24,4 +24,22 @@ describe ArchivedAttributes::ArchivedAttribute do
       @aa.destroy
     end
   end
+
+  describe "when options include :marshal" do
+    before do
+      options = { 'storage' => :filesystem, :marshal => true }
+      stub_model = stub(:uuid => '43')
+      @aa = ArchivedAttributes::ArchivedAttribute.new(Object, stub_model, options)
+    end
+
+    it "should call Marshal.load to restore value" do
+      Marshal.expects(:load)
+      @aa.value
+    end
+
+    it "should call Marshal.dump to save value" do
+      Marshal.expects(:dump)
+      @aa.value = 'foo'
+    end
+  end
 end

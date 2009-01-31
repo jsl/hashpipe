@@ -17,7 +17,7 @@ module ArchivedAttributes
       end
 
       def load
-        File.read( filename )
+        File.read( filename ) if File.exist?( filename )
       end
 
       # Returns the full file path + name of this archived attribute

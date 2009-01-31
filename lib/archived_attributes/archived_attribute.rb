@@ -19,10 +19,13 @@ module ArchivedAttributes
     end
 
     def value
-      defined?(@stashed_value) ? @stashed_value : @backend.load
+      val = defined?(@stashed_value) ? @stashed_value : @backend.load
+      marshal? ? Marshal.load(val) : val
     end
 
     def value=(other)
+      other = marshal? ? Marshal.dump(other) : other
+
       @stashed_value = other
       @dirty = true
     end
@@ -47,6 +50,11 @@ module ArchivedAttributes
         constantize.new(self)
     end
 
+
+    private
+    def marshal?
+      @options[:marshal]
+    end
   end
   
 end
