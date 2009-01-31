@@ -53,7 +53,7 @@ module ArchivedAttributes
 
     private
     def marshal?
-      @options[:marshal]
+      @options['marshal']
     end
   end
   

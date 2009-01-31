@@ -27,7 +27,7 @@ describe ArchivedAttributes::ArchivedAttribute do
 
   describe "when options include :marshal" do
     before do
-      options = { 'storage' => :filesystem, :marshal => true }
+      options = { 'storage' => :filesystem, 'marshal' => true }
       stub_model = stub(:uuid => '43')
       @aa = ArchivedAttributes::ArchivedAttribute.new(Object, stub_model, options)
     end
