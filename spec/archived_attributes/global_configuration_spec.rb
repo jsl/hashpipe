@@ -6,7 +6,6 @@ describe ArchivedAttributes::GlobalConfiguration do
   end
 
   it "should read default access key from the configuration file" do
-    puts @conf[:s3]
     @conf[:s3]['access_key'].should == 'your access key'
   end
 
@@ -26,7 +25,7 @@ describe ArchivedAttributes::GlobalConfiguration do
 
   describe "#to_hash" do
     it "should return an instance of Hash" do
-      @conf.to_hash.should be_an_instance_of(Hash)
+      @conf.to_hash.should be_an_instance_of(HashWithIndifferentAccess)
     end
   end
 

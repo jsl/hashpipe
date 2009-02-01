@@ -1,6 +1,7 @@
 require 'rubygems'
 require 'ostruct'
 require 'mocha'
+require 'spec'
 require 'activerecord'
 
 Spec::Runner.configure do |config|
