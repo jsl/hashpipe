@@ -12,10 +12,6 @@ module ArchivedAttributes
   module SingletonMethods
 
     def archived_attribute(*args)
-      before_save :generate_uuid
-      before_save :save_archived_attributes
-      before_destroy :destroy_archived_attributes
-
       attribute = args.first
 
       options = args.extract_options!
@@ -23,6 +19,10 @@ module ArchivedAttributes
 
       if archived_attribute_definitions.nil?
         write_inheritable_attribute(:archived_attribute_definitions, {})
+
+        before_save :generate_uuid
+        before_save :save_archived_attributes
+        before_destroy :destroy_archived_attributes
       end
       
       archived_attribute_definitions[attribute] = options
@@ -61,7 +61,7 @@ module ArchivedAttributes
     end
 
     def save_archived_attributes
-     each_archived_stash do |name, stash|
+      each_archived_stash do |name, stash|
         stash.__send__(:save)
       end
     end
@@ -73,7 +73,7 @@ module ArchivedAttributes
     end
 
     def generate_uuid
-      self.uuid = UUID.new.generate
+      self.uuid = UUID.new.generate if self.new_record?
     end
 
   end

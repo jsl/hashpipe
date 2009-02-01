@@ -41,6 +41,12 @@ describe ArchivedAttributes do
     @bear_story.description.should == @bear_struct
   end
 
+  it "shouldn't change uuid after it is initially set" do
+    lambda {
+      @bear_story.save!
+    }.should_not change(@bear_story, :uuid)
+  end
+
   it "should still be able to retrieve the same content for the attribute after reloading" do
     Story.find(@lamb_story.id).content.should == @lamb_text
   end
