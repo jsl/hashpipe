@@ -7,6 +7,8 @@ module ArchivedAttributes
 
     DEFAULTS = HashWithIndifferentAccess.new({
       :storage => 'filesystem',
+      :marshal => false,
+      :gzip    => false,
       :s3 => {
         :protocol => 'https'
       },

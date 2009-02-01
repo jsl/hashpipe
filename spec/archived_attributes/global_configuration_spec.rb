@@ -5,6 +5,16 @@ describe ArchivedAttributes::GlobalConfiguration do
     @conf = ArchivedAttributes::GlobalConfiguration.instance
   end
 
+  describe "defaults" do
+    it "should set default marshal value to false" do
+      ArchivedAttributes::GlobalConfiguration::DEFAULTS[:marshal].should == false
+    end
+    
+    it "should set gzip value to false" do
+      ArchivedAttributes::GlobalConfiguration::DEFAULTS[:marshal].should == false
+    end
+  end
+
   it "should read default access key from the configuration file" do
     @conf[:s3]['access_key'].should == 'your access key'
   end
