@@ -19,18 +19,23 @@ module ArchivedAttributes
       config[val]
     end
 
-    def config
-      @config ||= HashWithIndifferentAccess.new(
-        DEFAULTS.merge(load_yaml_configuration)
-      )
+    def to_hash
+      config
     end
-    alias :to_hash :config
 
     def to_s
       config.inspect
     end
 
     private
+
+    def config
+      @config ||= HashWithIndifferentAccess.new(
+        DEFAULTS.merge(load_yaml_configuration)
+      )
+
+      @config.dup
+    end
 
     def load_yaml_configuration
       YAML.load_file(

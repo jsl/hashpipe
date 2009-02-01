@@ -23,6 +23,22 @@ describe ArchivedAttributes::GlobalConfiguration do
     end
   end
 
+  describe "hash cloning" do
+    it "should be able to alter a Hash without affecting the original object" do
+      conf = @conf.to_hash
+      previous = @conf[:storage]
+      conf[:storage] = 'foo'
+      @conf[:storage].should == previous
+    end
+
+    it "should not affect deeply nested attributes when values are changed" do
+      conf = @conf.to_hash
+      previous = @conf[:s3][:protocol]
+      conf[:s3][:protocol] = 'puddle'
+      @conf[:s3][:protocol].should == previous
+    end
+  end
+
   describe "#to_hash" do
     it "should return an instance of Hash" do
       @conf.to_hash.should be_an_instance_of(HashWithIndifferentAccess)
