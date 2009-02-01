@@ -38,11 +38,14 @@ module ArchivedAttributes
       end
 
       # The file path used for archiving this attribute.  Includes either the
-      # options[:path] attribute, if available, or the RAILS_ROOT path + tmp.
-      # Also includes the name of the attribute for namespacing.
+      # options[:filesystem][:archive_root] attribute, if available, or the
+      # RAILS_ROOT/tmp/archived_attribute_archive/attribute_name.
       def filepath
-        base_path = @archived_attribute.options[:path] ||
-          File.join(RAILS_ROOT, 'tmp')
+        config_path = @archived_attribute.options[:filesystem][:archive_root]
+
+        base_path =  config_path || File.join(
+          %W[#{RAILS_ROOT} tmp archived_attribute_archive]
+        )
 
         File.expand_path( File.join(base_path,
             @archived_attribute.name.to_s,

@@ -1,5 +1,5 @@
 test:
-    storage: s3
+    storage: filesystem
     s3:
         bucket: test_archived_attributes
         access_key: your access key
@@ -15,4 +15,5 @@ development:
 
 anotherenv:
     storage: filesystem
-    path: /tmp/archived_attributes
+    filesystem:
+        archive_root: /tmp/archived_attributes

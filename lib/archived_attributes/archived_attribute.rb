@@ -46,7 +46,7 @@ module ArchivedAttributes
 
     # Returns a backend object based on the options given (e.g., filesystem, s3).
     def instantiate_backend_from(options)
-      "ArchivedAttributes::Backends::#{options[:default_storage].to_s.camelize}".
+      "ArchivedAttributes::Backends::#{options[:storage].to_s.camelize}".
         constantize.new(self)
     end
 

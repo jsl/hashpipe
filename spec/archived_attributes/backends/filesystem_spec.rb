@@ -15,7 +15,7 @@ describe ArchivedAttributes::Backends::Filesystem do
     )
 
     aa = ArchivedAttributes::ArchivedAttribute.new(:content, @instance,
-      :path => @path)
+      :filesystem => { :archive_root => @path } )
     
     @fs = ArchivedAttributes::Backends::Filesystem.new(aa)
   end

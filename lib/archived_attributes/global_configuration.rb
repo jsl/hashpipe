@@ -6,9 +6,12 @@ module ArchivedAttributes
     include Singleton
 
     DEFAULTS = HashWithIndifferentAccess.new({
-      :default_storage => :filesystem,
+      :storage => 'filesystem',
       :s3 => {
         :protocol => 'https'
+      },
+      :filesystem => {
+        :archive_root => nil
       }
     })
     

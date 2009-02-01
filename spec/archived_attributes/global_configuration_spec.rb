@@ -35,11 +35,11 @@ describe ArchivedAttributes::GlobalConfiguration do
     end
 
     it "should default to https for protocol" do
-      @conf[:s3]['protocol'].should == 'https'
+      @conf[:s3][:protocol].should == 'https'
     end
 
-    it "should set default_storage to :filesystem" do
-      @conf[:storage].should == 's3'
+    it "should set default storage attribute to :filesystem" do
+      @conf[:storage].should == 'filesystem'
     end
   end
 
