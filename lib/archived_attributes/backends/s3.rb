@@ -11,7 +11,7 @@ module ArchivedAttributes
       end
 
       def save(content)
-        bucket.put( key_name, StringIO.new( content ) )
+        bucket.put( key_name, StringIO.new( content ) ) unless content.nil?
       end
 
       def destroy
@@ -42,7 +42,7 @@ module ArchivedAttributes
       end
 
       def key_name
-        [ @archived_attribute.instance.class.to_s.downcase,
+        [ @archived_attribute.instance.class.table_name,
           @archived_attribute.name,
           @archived_attribute.instance.uuid ].join('/')
       end

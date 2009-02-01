@@ -2,15 +2,11 @@ require File.join(File.dirname(__FILE__), %w[ .. .. spec_helper ])
 
 describe ArchivedAttributes::Backends::S3 do
 
-  # Test instance
-  class Glorp
-    def uuid
-      '63d3a120-caca-012b-d468-002332d4f91e'
-    end
-  end
-
   before do
-    @instance = Glorp.new
+    @instance = stub('ar_instance', 
+      :uuid => '63d3a120-caca-012b-d468-002332d4f91e',
+      :table_name => 'glorps'
+    )
     
     @aa = ArchivedAttributes::ArchivedAttribute.new(:stuff, @instance)
     @s3 = ArchivedAttributes::Backends::S3.new(@aa)
@@ -43,6 +39,7 @@ describe ArchivedAttributes::Backends::S3 do
       bucket.expects(:get).once
       aws_s3 = mock('aws_s3')
       aws_s3.expects(:bucket).returns(bucket)
+      @s3.expects(:key_name).returns('some-key')
       @s3.expects(:right_aws_s3).returns(aws_s3)
       @s3.load
     end
@@ -54,7 +51,7 @@ describe ArchivedAttributes::Backends::S3 do
       content = 'hey'
       key = 'fookey'
       @s3.expects(:key_name).returns(key)
-      bucket.expects(:put).once.with(key, content)
+      bucket.expects(:put).once
       aws_s3 = mock('aws_s3')
       aws_s3.expects(:bucket).returns(bucket)
       @s3.expects(:right_aws_s3).returns(aws_s3)
@@ -69,6 +66,7 @@ describe ArchivedAttributes::Backends::S3 do
       aws_s3 = mock('aws_s3')
       aws_s3.expects(:bucket).returns(bucket)
       @s3.expects(:right_aws_s3).returns(aws_s3)
+      @s3.expects(:key_name).returns('foo-key')
       @s3.destroy
     end
   end

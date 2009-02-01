@@ -29,7 +29,7 @@ module ArchivedAttributes
 
     def value=(other)
       other = marshal? ? Marshal.dump(other) : other
-      other = compress? ? Zlib::Deflate.deflate(other) : other
+      other = compress? && !other.nil? ? Zlib::Deflate.deflate(other) : other
       @stashed_value = other
       @dirty = true
     end

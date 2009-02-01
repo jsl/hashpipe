@@ -96,6 +96,12 @@ describe ArchivedAttributes::ArchivedAttribute do
     it "should retrieve same content string stored in gzip form" do
       @aa.value.should == @content
     end
+
+    it "should not raise an error with nil content" do
+      lambda {
+        @aa.value = nil
+      }.should_not raise_error
+    end
   end
 
   describe "when compress and marshal are on" do
