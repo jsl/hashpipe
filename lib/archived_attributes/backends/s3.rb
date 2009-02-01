@@ -11,7 +11,7 @@ module ArchivedAttributes
       end
 
       def save(content)
-        bucket.put( key_name, content )
+        bucket.put( key_name, StringIO.new( content ) )
       end
 
       def destroy
