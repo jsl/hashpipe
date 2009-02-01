@@ -30,15 +30,15 @@ describe ArchivedAttributes::ArchivedAttribute do
     end
   end
 
-  describe "#gzip?" do
+  describe "#compress?" do
     it "should return false if configuration option is nil" do
-      @aa.expects(:options).returns({:gzip => nil})
-      @aa.__send__(:gzip?).should be_false
+      @aa.expects(:options).returns({:compress => nil})
+      @aa.__send__(:compress?).should be_false
     end
 
     it "should return value from configuration if configuration option is not nil" do
-      @aa.expects(:options).returns({:gzip => false}).times(2)
-      @aa.__send__(:gzip?).should be_false
+      @aa.expects(:options).returns({:compress => false}).times(2)
+      @aa.__send__(:compress?).should be_false
     end
   end
 
@@ -79,7 +79,7 @@ describe ArchivedAttributes::ArchivedAttribute do
       @content = "The band formed in 1988 in Oxford"
       stub_backend = stub('backend', :load => Zlib::Deflate.deflate(@content))
       @aa.stubs(:options).
-        returns({ :storage => 'filesystem', :gzip => true })
+        returns({ :storage => 'filesystem', :compress => true })
       @aa.__send__(:instance_variable_set, :'@backend', stub_backend)
     end
 
@@ -98,12 +98,12 @@ describe ArchivedAttributes::ArchivedAttribute do
     end
   end
 
-  describe "when gzip and marshal are on" do
+  describe "when compress and marshal are on" do
     before do
       @content = "The band formed in 1988 in Oxford"
       stub_backend = stub('backend', :load => Zlib::Deflate.deflate(Marshal.dump(@content)))
       @aa.stubs(:options).
-        returns({ :storage => 'filesystem', :gzip => true, :marshal => true })
+        returns({ :storage => 'filesystem', :compress => true, :marshal => true })
       @aa.__send__(:instance_variable_set, :'@backend', stub_backend)
     end
 

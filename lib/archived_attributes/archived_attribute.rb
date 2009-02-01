@@ -23,13 +23,13 @@ module ArchivedAttributes
 
     def value
       val = defined?(@stashed_value) ? @stashed_value : @backend.load
-      val = gzip? ? Zlib::Inflate.inflate(val) : val
+      val = compress? ? Zlib::Inflate.inflate(val) : val
       val = marshal? ? Marshal.load(val) : val
     end
 
     def value=(other)
       other = marshal? ? Marshal.dump(other) : other
-      other = gzip? ? Zlib::Deflate.deflate(other) : other
+      other = compress? ? Zlib::Deflate.deflate(other) : other
       @stashed_value = other
       @dirty = true
     end
@@ -61,7 +61,7 @@ module ArchivedAttributes
 
     private
 
-    [:marshal, :gzip].each do |sym|
+    [:marshal, :compress].each do |sym|
       define_method("#{sym}?") do                   # def marshal?
         options[sym].nil? ? false : options[sym]    #   options[:marshal].nil? ? false : options[:marshal]
       end                                           # end
