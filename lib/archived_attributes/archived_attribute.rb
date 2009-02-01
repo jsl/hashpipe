@@ -20,7 +20,7 @@ module ArchivedAttributes
 
       @backend = instantiate_backend_from(options)
     end
-
+    
     def value
       val = defined?(@stashed_value) ? @stashed_value : @backend.load
       val = compress? ? Zlib::Inflate.inflate(val) : val

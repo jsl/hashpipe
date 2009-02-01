@@ -29,7 +29,7 @@ describe ArchivedAttributes::Backends::S3 do
     end
 
     it "should use http if specified in the configuration object" do
-      config = { 'protocol' => 'http' }
+      config = { :protocol => 'http' }
       @s3.instance_variable_set(:"@config", config)
       
       @s3.__send__(:protocol).should == "http"
@@ -52,7 +52,9 @@ describe ArchivedAttributes::Backends::S3 do
     it "should call method to store data in s3" do
       bucket = mock('bucket')
       content = 'hey'
-      bucket.expects(:put).once.with(content)
+      key = 'fookey'
+      @s3.expects(:key_name).returns(key)
+      bucket.expects(:put).once.with(key, content)
       aws_s3 = mock('aws_s3')
       aws_s3.expects(:bucket).returns(bucket)
       @s3.expects(:right_aws_s3).returns(aws_s3)

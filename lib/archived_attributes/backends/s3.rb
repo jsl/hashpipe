@@ -11,7 +11,7 @@ module ArchivedAttributes
       end
 
       def save(content)
-        bucket.put(content)
+        bucket.put( key_name, content )
       end
 
       def destroy
@@ -25,20 +25,20 @@ module ArchivedAttributes
       private
 
       def bucket
-        @bucket ||= right_aws_s3.bucket(bucket_name, true)
+        @bucket ||= right_aws_s3.bucket(bucket_name)
       end
 
       def right_aws_s3        
         @s3 ||= RightAws::S3.new(
-          @config['access_key'],
-          @config['secret_key']
+          @config[:access_key],
+          @config[:secret_key]
         )
       end
 
       # Returns the bucket name to be used based on attributes of the archived
       # attribute.
       def bucket_name
-        @config['bucket']
+        @config[:bucket]
       end
 
       def key_name
@@ -50,7 +50,7 @@ module ArchivedAttributes
       # Returns a string representing whether we use http or https for this
       # connection.
       def protocol
-        @config['protocol'] || 'https'
+        @config[:protocol] || 'https'
       end
     end
 
