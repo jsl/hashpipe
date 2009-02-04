@@ -1,0 +1,53 @@
+Archived Attributes
+-------------------
+
+Save ActiveRecord content in attributes transparently to S3 or other
+pluggable backend.  Supports transparent gzip
+compression/decompression and serialization/deserialization using
+Marshal.
+
+This plugin is being released as an "alpha" product.  It seems to
+work, but needs refinement to be considered production-ready.
+
+Quick Start
+-----------
+
+ * Install the gem
+ * Include the gem in your app with a line in an initializer (may not be needed if gem is configured in environment.rb)
+ * Add a column :uuid of type String, unique to the table where you want to use an archived_attribute
+ * Call archived_attribute :foo in your model
+ * Saving to the model and retrieving from it saves to the backend store defined in your options
+
+Configuration
+-------------
+
+Currently supported backends include filesystem and S3.  The
+filesystem backend is just a flat store, mostly for testing purposes,
+as putting thousands of files in one directory just doesn't scale
+well.  Read through the yaml file included with the distribution as
+well as the spec suite to get a feel for how plugin configuration
+works.  You can define a default backend globally, and override it in
+individual models as needed (e.g., store one attribute in the
+filesystem and another in S3).
+
+Caveats
+-------
+
+There could be network issues saving your attribute to a backend store
+such as S3.  Because ArchivedAttributes works by defining callbacks on
+your model, it may result in your model not being saved if a network
+error is raised in the transaction block defined for the saving of
+your record.  You should probably work around this by trying the save
+operation again using a rescue block.  There may also be changes to
+the behavior of the code in this area in the future.
+
+Author
+------
+
+Justin S. Leitgeb, <justin <at> phq <dot> org>
+
+Credits
+-------
+
+Some of the parts of this plugin were inspired by the Paperclip
+plugin, which is designed to attach files to your ActiveRecord models.
