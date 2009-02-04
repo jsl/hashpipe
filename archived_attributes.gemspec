@@ -26,4 +26,5 @@ Gem::Specification.new do |s|
     "spec/archived_attributes/backends/s3_spec.rb"
   ]
   s.add_dependency("right_aws", ["> 0.0.0"])
+  s.add_dependency("assaf-uuid", ["> 0.0.0"])
 end
