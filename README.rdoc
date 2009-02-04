@@ -1,16 +1,19 @@
-Archived Attributes
--------------------
+= Name
 
-Save ActiveRecord content in attributes transparently to S3 or other
-pluggable backend.  Supports transparent gzip
-compression/decompression and serialization/deserialization using
-Marshal.
+ArchivedAttributes - Save ActiveRecord content in attributes transparently to S3 or other
+pluggable backend.
+
+= Description
+
+Supports transparent gzip compression/decompression and
+serialization/deserialization using Marshal.
+
+= Project Status
 
 This plugin is being released as an "alpha" product.  It seems to
 work, but needs refinement to be considered production-ready.
 
-Quick Start
------------
+= Quick Start
 
  * Install the gem
  * Include the gem in your app with a line in an initializer (may not be needed if gem is configured in environment.rb)
@@ -18,8 +21,7 @@ Quick Start
  * Call archived_attribute :foo in your model
  * Saving to the model and retrieving from it saves to the backend store defined in your options
 
-Configuration
--------------
+= Configuration
 
 Currently supported backends include filesystem and S3.  The
 filesystem backend is just a flat store, mostly for testing purposes,
@@ -30,8 +32,7 @@ works.  You can define a default backend globally, and override it in
 individual models as needed (e.g., store one attribute in the
 filesystem and another in S3).
 
-Caveats
--------
+= Caveats
 
 There could be network issues saving your attribute to a backend store
 such as S3.  Because ArchivedAttributes works by defining callbacks on
@@ -41,13 +42,11 @@ your record.  You should probably work around this by trying the save
 operation again using a rescue block.  There may also be changes to
 the behavior of the code in this area in the future.
 
-Author
-------
+= Author
 
-Justin S. Leitgeb, <justin <at> phq <dot> org>
+Justin S. Leitgeb, <justin@phq.org>
 
-Credits
--------
+= Credits
 
 Some of the parts of this plugin were inspired by the Paperclip
-plugin, which is designed to attach files to your ActiveRecord models.
+plugin, which allows you to easily attach files to your ActiveRecord models.
