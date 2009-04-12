@@ -24,8 +24,8 @@ Gem::Specification.new do |s|
     "spec/hashpipe/global_configuration_spec.rb",
     "spec/hashpipe/archived_attribute_spec.rb",
     "spec/hashpipe/backends/filesystem_spec.rb",
-    "spec/hashpipe/backends/s3_spec.rb"
-    "spec/hashpipe/backends/memcache_spec.rb",
+    "spec/hashpipe/backends/s3_spec.rb",
+    "spec/hashpipe/backends/memcache_spec.rb"
   ]
   
   s.add_dependency("right_aws", ["> 0.0.0"])
