@@ -1,6 +1,8 @@
-module ArchivedAttributes
+module HashPipe
   module Backends
     
+    # The filesystem backend is mostly useful for development or test work.  It's not currently sharded
+    # in any way, so would probably have serious issues for production use.  You have been warned.
     class Filesystem
 
       def initialize(archived_attribute)
@@ -44,7 +46,7 @@ module ArchivedAttributes
         config_path = @archived_attribute.options[:filesystem][:archive_root]
 
         base_path =  config_path || File.join(
-          %W[#{RAILS_ROOT} tmp archived_attribute_archive]
+          %W[#{RAILS_ROOT} tmp hashpipe_stash]
         )
 
         File.expand_path( File.join(base_path,

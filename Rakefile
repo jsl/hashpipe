@@ -15,10 +15,10 @@ end
 desc "Run all the tests"
 task :default => :spec
 
-desc 'Generate documentation for the compressed_attributes plugin.'
+desc 'Generate documentation for the hashpipe plugin.'
 Rake::RDocTask.new(:rdoc) do |rdoc|
   rdoc.rdoc_dir = 'rdoc'
-  rdoc.title    = 'ArchivedAttributes'
+  rdoc.title    = 'HashPipe'
   rdoc.options << '--line-numbers' << '--inline-source'
   rdoc.rdoc_files.include('README')
   rdoc.rdoc_files.include('lib/**/*.rb')

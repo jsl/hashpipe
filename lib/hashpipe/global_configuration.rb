@@ -1,4 +1,4 @@
-module ArchivedAttributes
+module HashPipe
 
   # Singleton class for reading the defaults archived attribute configuration
   # for this environment.
@@ -41,7 +41,7 @@ module ArchivedAttributes
 
     def load_yaml_configuration
       YAML.load_file(
-        File.join( RAILS_ROOT, 'config', 'archived_attributes.yml' )
+        File.join( RAILS_ROOT, 'config', 'hashpipe.yml' )
       )[RAILS_ENV]
     end
   end

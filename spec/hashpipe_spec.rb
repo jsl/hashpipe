@@ -18,14 +18,14 @@ ActiveRecord::Base.silence do
   end
 end
 
-ActiveRecord::Base.__send__(:include, ArchivedAttributes)
+ActiveRecord::Base.__send__(:include, HashPipe)
 
 class Story < ActiveRecord::Base
-  archived_attribute :content
-  archived_attribute :description, { :marshalled => true }
+  hattr :content
+  hattr :description, { :marshalled => true }
 end
 
-describe ArchivedAttributes do
+describe HashPipe do
   before do
     @lamb_text    =  'Baaah!'
     @bear_struct  =  OpenStruct.new(:blah => 'arg')

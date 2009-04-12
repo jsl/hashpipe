@@ -1,6 +1,6 @@
 require File.join(File.dirname(__FILE__), %w[ .. .. spec_helper ])
 
-describe ArchivedAttributes::Backends::S3 do
+describe HashPipe::Backends::S3 do
 
   before do
     @instance = stub('ar_instance', 
@@ -8,14 +8,14 @@ describe ArchivedAttributes::Backends::S3 do
       :table_name => 'glorps'
     )
     
-    @aa = ArchivedAttributes::ArchivedAttribute.new(:stuff, @instance)
-    @s3 = ArchivedAttributes::Backends::S3.new(@aa)
-    @config = ArchivedAttributes::GlobalConfiguration.instance
+    @aa = HashPipe::ArchivedAttribute.new(:stuff, @instance)
+    @s3 = HashPipe::Backends::S3.new(@aa)
+    @config = HashPipe::GlobalConfiguration.instance
   end
 
   describe "#initialize" do
     it "should initialize an s3 object without error" do
-      lambda { ArchivedAttributes::Backends::S3.new(@aa) }.should_not raise_error
+      lambda { HashPipe::Backends::S3.new(@aa) }.should_not raise_error
     end
   end
 

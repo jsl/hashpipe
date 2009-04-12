@@ -5,7 +5,7 @@ require File.expand_path(File.join(File.dirname(__FILE__),
 
 require File.expand_path(File.join(File.dirname(__FILE__),  %w[ backends s3 ]))
 
-module ArchivedAttributes
+module HashPipe
   
   class ArchivedAttribute
     attr_reader :name, :instance
@@ -15,7 +15,7 @@ module ArchivedAttributes
       @instance = instance
       @dirty    = false
 
-      @_options = ArchivedAttributes::GlobalConfiguration.instance.to_hash.
+      @_options = HashPipe::GlobalConfiguration.instance.to_hash.
         merge(opts)
 
       @backend = instantiate_backend_from(options)
@@ -51,7 +51,7 @@ module ArchivedAttributes
     # Returns a backend object based on the options given (e.g., filesystem,
     # s3).
     def instantiate_backend_from(options)
-      "ArchivedAttributes::Backends::#{options[:storage].to_s.camelize}".
+      "HashPipe::Backends::#{options[:storage].to_s.camelize}".
         constantize.new(self)
     end
 

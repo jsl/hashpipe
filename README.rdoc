@@ -4,14 +4,13 @@ HashPipe - Transparently maintains an attribute of an ActiveRecord backed model 
 
 = Description
 
-HashPipe allows you to have an attribute of an existing ActiveRecord-backed class stored in a separate system, such as S3 or Tokyo Cabinet.  It's called HashPipe because these back-end stores often take the form of a hashtable.
+HashPipe allows you to have an attribute of an existing ActiveRecord (AR)-backed class stored in a separate system, such as S3 or Tokyo Cabinet.  In this sense, it provides a pipe from an AR object to a hash - a hash pipe!
 
 HashPipe supports transparent gzip compression/decompression of attribute data and serialization/deserialization using Marshal in case you wish to store Ruby objects in the attribute.
 
 = Project Status
 
-This plugin is being released as an "alpha" product.  It seems to
-work, but needs refinement to be considered production-ready.
+This plugin is being released as an "alpha" product.  It seems to work, but needs refinement to be considered production-ready.
 
 = Quick Start
 
@@ -43,5 +42,4 @@ Justin S. Leitgeb, <justin@phq.org>
 
 = Credits
 
-Some of the parts of this plugin were inspired by the Paperclip
-plugin, which allows you to easily attach files to your ActiveRecord models.
+Some of the parts of this plugin were inspired by the Paperclip plugin, which allows you to easily attach files to your ActiveRecord models.

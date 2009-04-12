@@ -2,7 +2,7 @@ require File.join(File.dirname(__FILE__), %w[ .. .. spec_helper ])
 
 require 'tmpdir'
 
-describe ArchivedAttributes::Backends::Filesystem do
+describe HashPipe::Backends::Filesystem do
 
   before do
     @unique_path_part = 'archived_attributes_test'
@@ -14,10 +14,10 @@ describe ArchivedAttributes::Backends::Filesystem do
       :name => :foo
     )
 
-    aa = ArchivedAttributes::ArchivedAttribute.new(:content, @instance,
+    aa = HashPipe::ArchivedAttribute.new(:content, @instance,
       :filesystem => { :archive_root => @path } )
     
-    @fs = ArchivedAttributes::Backends::Filesystem.new(aa)
+    @fs = HashPipe::Backends::Filesystem.new(aa)
   end
 
   it "should write to the correct path" do

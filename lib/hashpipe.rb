@@ -1,9 +1,9 @@
-require File.expand_path(File.join(File.dirname(__FILE__), %w[archived_attributes archived_attribute] ))
-require File.expand_path(File.join(File.dirname(__FILE__), %w[archived_attributes global_configuration] ))
+require File.expand_path(File.join(File.dirname(__FILE__), %w[hashpipe archived_attribute] ))
+require File.expand_path(File.join(File.dirname(__FILE__), %w[hashpipe global_configuration] ))
 
 require 'uuid'
 
-module ArchivedAttributes
+module HashPipe
 
   def self.included(base)
     base.extend(SingletonMethods)
@@ -11,7 +11,7 @@ module ArchivedAttributes
 
   module SingletonMethods
 
-    def archived_attribute(*args)
+    def hattr(*args)
       attribute = args.first
 
       options = args.extract_options!

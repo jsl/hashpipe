@@ -1,17 +1,17 @@
 require File.join(File.dirname(__FILE__), %w[ .. spec_helper ])
 
-describe ArchivedAttributes::GlobalConfiguration do
+describe HashPipe::GlobalConfiguration do
   before do
-    @conf = ArchivedAttributes::GlobalConfiguration.instance
+    @conf = HashPipe::GlobalConfiguration.instance
   end
 
   describe "defaults" do
     it "should set default marshal value to false" do
-      ArchivedAttributes::GlobalConfiguration::DEFAULTS[:marshal].should == false
+      HashPipe::GlobalConfiguration::DEFAULTS[:marshal].should == false
     end
     
     it "should set gzip value to false" do
-      ArchivedAttributes::GlobalConfiguration::DEFAULTS[:marshal].should == false
+      HashPipe::GlobalConfiguration::DEFAULTS[:marshal].should == false
     end
   end
 

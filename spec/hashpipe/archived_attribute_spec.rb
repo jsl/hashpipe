@@ -1,10 +1,10 @@
 require File.join(File.dirname(__FILE__), %w[ .. spec_helper ])
 
-describe ArchivedAttributes::ArchivedAttribute do
+describe HashPipe::ArchivedAttribute do
   before do
     options = { :storage => 'filesystem' }
     stub_model = stub(:uuid => '43')
-    @aa = ArchivedAttributes::ArchivedAttribute.new(:glorp, stub_model, options)
+    @aa = HashPipe::ArchivedAttribute.new(:glorp, stub_model, options)
   end
 
   describe "#dirty?" do

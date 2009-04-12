@@ -1,13 +1,13 @@
 require 'right_aws'
 
-module ArchivedAttributes
+module HashPipe
   module Backends
 
     class S3
 
       def initialize(archived_attribute)
         @archived_attribute = archived_attribute
-        @config = ArchivedAttributes::GlobalConfiguration.instance[:s3]
+        @config = HashPipe::GlobalConfiguration.instance[:s3]
       end
 
       def save(content)
