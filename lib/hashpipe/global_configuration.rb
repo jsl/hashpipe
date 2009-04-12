@@ -14,6 +14,9 @@ module HashPipe
       },
       :filesystem => {
         :archive_root => nil
+      },
+      :memcache => {
+        :port => 1978
       }
     })
     

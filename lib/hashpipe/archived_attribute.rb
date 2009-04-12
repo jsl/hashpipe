@@ -1,9 +1,8 @@
 require 'activesupport'
 
-require File.expand_path(File.join(File.dirname(__FILE__),  
-    %w[ backends filesystem ]))
-
+require File.expand_path(File.join(File.dirname(__FILE__),  %w[ backends filesystem ]))
 require File.expand_path(File.join(File.dirname(__FILE__),  %w[ backends s3 ]))
+require File.expand_path(File.join(File.dirname(__FILE__),  %w[ backends memcache ]))
 
 module HashPipe
   

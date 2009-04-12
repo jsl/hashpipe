@@ -1,19 +1,23 @@
 test:
-    storage: filesystem
-    s3:
-        bucket: test_archived_attributes
-        access_key: your access key
-        secret_key: your secret key
-        protocol: https
-        
+  storage: filesystem
+  s3:
+    bucket: test_archived_attributes
+    access_key: your access key
+    secret_key: your secret key
+    protocol: https
+
 development:
-    storage: s3
-    s3:
-        bucket: development_archived_attributes
-        access_key: your access key
-        secret_key: your secret key
+  storage: s3
+  s3:
+    bucket: development_archived_attributes
+    access_key: your access key
+    secret_key: your secret key
 
 anotherenv:
-    storage: filesystem
-    filesystem:
-        archive_root: /tmp/archived_attributes
+  storage: filesystem
+  filesystem:
+    archive_root: /tmp/archived_attributes
+        
+qa:
+  storage: memcache
+  namespace: hashit

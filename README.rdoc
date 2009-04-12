@@ -4,7 +4,7 @@ HashPipe - Transparently maintains an attribute of an ActiveRecord backed model 
 
 = Description
 
-HashPipe allows you to have an attribute of an existing ActiveRecord (AR)-backed class stored in a separate system, such as S3 or Tokyo Cabinet.  In this sense, it provides a pipe from an AR object to a hash - a hash pipe!
+HashPipe allows you to have an attribute of an existing ActiveRecord (AR)-backed class stored in a separate system, such as S3 or Tokyo Cabinet (currently accessed through the memcached protocol to Tokyo Tyrant).  In this sense, it provides a pipe from an AR object to a hash - a hash pipe!
 
 HashPipe supports transparent gzip compression/decompression of attribute data and serialization/deserialization using Marshal in case you wish to store Ruby objects in the attribute.
 
