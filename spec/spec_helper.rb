@@ -3,6 +3,7 @@ require 'ostruct'
 require 'mocha'
 require 'spec'
 require 'activerecord'
+require 'zlib'
 
 Spec::Runner.configure do |config|
   config.mock_with(:mocha)
