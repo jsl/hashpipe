@@ -1,12 +1,12 @@
 = Name
 
-ArchivedAttributes - Save ActiveRecord content in attributes transparently to S3 or other
-pluggable backend.
+HashPipe - Transparently maintains an attribute of an ActiveRecord backed model in a separate key-value data structure such as S3 or Tokyo Cabinet.
 
 = Description
 
-Supports transparent gzip compression/decompression and
-serialization/deserialization using Marshal.
+HashPipe allows you to have an attribute of an existing ActiveRecord-backed class stored in a separate system, such as S3 or Tokyo Cabinet.  It's called HashPipe because these back-end stores often take the form of a hashtable.
+
+HashPipe supports transparent gzip compression/decompression of attribute data and serialization/deserialization using Marshal in case you wish to store Ruby objects in the attribute.
 
 = Project Status
 
@@ -19,28 +19,23 @@ work, but needs refinement to be considered production-ready.
  * Include the gem in your app with a line in an initializer (may not be needed if gem is configured in environment.rb)
  * Add a column :uuid of type String, unique to the table where you want to use an archived_attribute
  * Call archived_attribute :foo in your model
- * Saving to the model and retrieving from it saves to the backend store defined in your options
+ * Saving to the model and retrieving from it saves to the backend store defined in your options.  Likewise, deleting the model
+   triggers a callback of the element in the associated store.
 
 = Configuration
 
-Currently supported backends include filesystem and S3.  The
-filesystem backend is just a flat store, mostly for testing purposes,
-as putting thousands of files in one directory just doesn't scale
-well.  Read through the yaml file included with the distribution as
-well as the spec suite to get a feel for how plugin configuration
-works.  You can define a default backend globally, and override it in
-individual models as needed (e.g., store one attribute in the
-filesystem and another in S3).
+Currently supported backends include filesystem and S3.  The filesystem backend is just a flat store, mostly for testing purposes,
+as putting thousands of files in one directory just doesn't scale well.  Read through the yaml file included with the distribution as
+well as the spec suite to get a feel for how plugin configuration works.  You can define a default backend globally, and override it in
+individual models as needed (e.g., store one attribute in the filesystem and another in S3).
+
+= Extension
+
+HashPipe is written in such a way that additional key-value storage backends should be able to be added rather easily.
 
 = Caveats
 
-There could be network issues saving your attribute to a backend store
-such as S3.  Because ArchivedAttributes works by defining callbacks on
-your model, it may result in your model not being saved if a network
-error is raised in the transaction block defined for the saving of
-your record.  You should probably work around this by trying the save
-operation again using a rescue block.  There may also be changes to
-the behavior of the code in this area in the future.
+There could be network issues saving your attribute to a backend store such as S3.  Because ArchivedAttributes works by defining callbacks on your model, it may result in your model not being saved if a network error is raised in the transaction block defined for the saving of your record.  You should probably work around this by trying the save operation again using a rescue block.  There may also be changes to the behavior of the code in this area in the future.
 
 = Author
 
