@@ -17,6 +17,7 @@ Gem::Specification.new do |s|
     "lib/hashpipe/archived_attribute.rb",
     "lib/hashpipe/global_configuration.rb",
     "lib/hashpipe/backends/s3.rb",
+    "lib/hashpipe/backends/memcache.rb",
     "lib/hashpipe/backends/filesystem.rb"
   ]
   s.test_files = [
@@ -24,6 +25,7 @@ Gem::Specification.new do |s|
     "spec/hashpipe/archived_attribute_spec.rb",
     "spec/hashpipe/backends/filesystem_spec.rb",
     "spec/hashpipe/backends/s3_spec.rb"
+    "spec/hashpipe/backends/memcache_spec.rb",
   ]
   
   s.add_dependency("right_aws", ["> 0.0.0"])
