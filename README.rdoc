@@ -1,6 +1,7 @@
 = Name
 
-HashPipe - Transparently maintains an attribute of an ActiveRecord backed model in a separate key-value data structure such as S3 or Tokyo Cabinet.
+HashPipe - Transparently maintains an attribute of an ActiveRecord backed model in a separate key-value data structure 
+such as S3 or Tokyo Cabinet.
 
 = Description
 
@@ -14,12 +15,25 @@ This plugin is being released as an "alpha" product.  It seems to work, but need
 
 = Quick Start
 
- * Install the gem
- * Include the gem in your app with a line in an initializer (may not be needed if gem is configured in environment.rb)
- * Add a column :uuid of type String, unique to the table where you want to use an archived_attribute
- * Call archived_attribute :foo in your model
- * Saving to the model and retrieving from it saves to the backend store defined in your options.  Likewise, deleting the model
-   triggers a callback of the element in the associated store.
+* Install the gem 'hashpipe' available from github as jsl-hashpipe.  If you're using a recent version of Rails you may 
+  want to add a line like the following to your environment.rb:
+
+    config.gem "jsl-hashpipe", :lib => 'hashpipe', :source => 'http://gems.github.com'
+
+* Include the gem in your app with a line in an initializer (may not be needed if gem is configured in environment.rb)
+
+* Add a column :uuid of type String, unique to the table where you want to use an hashpipe attribute (hattr)
+
+* If you wanted to serialize an attribute 'elephant' in model Foo, you would call hattr :elephant in your model.  
+  For example, class 'Foo' may look like:
+
+    class Foo < ActiveRecord::Base
+      hattr :elephant
+    end
+    
+* After following the above steps, saving to the model and retrieving from it saves to the backend store 
+  defined in your options.  Likewise, deleting the model triggers a callback to delete the element in the 
+  associated store.
 
 = Configuration
 
