@@ -78,3 +78,5 @@ module HashPipe
 
   end
 end
+
+ActiveRecord::Base.send(:include, HashPipe)

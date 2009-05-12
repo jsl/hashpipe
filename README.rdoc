@@ -20,8 +20,6 @@ This plugin is being released as an "alpha" product.  It seems to work, but need
 
     config.gem "jsl-hashpipe", :lib => 'hashpipe', :source => 'http://gems.github.com'
 
-* Include the gem in your app with a line in an initializer (may not be needed if gem is configured in environment.rb)
-
 * Add a column :uuid of type String, unique to the table where you want to use an hashpipe attribute (hattr)
 
 * If you wanted to serialize an attribute 'elephant' in model Foo, you would call hattr :elephant in your model.  
@@ -30,25 +28,40 @@ This plugin is being released as an "alpha" product.  It seems to work, but need
     class Foo < ActiveRecord::Base
       hattr :elephant
     end
-    
+
+* Configure hashpipe by creating a file hashpipe.yml in your projects' config directory
+
 * After following the above steps, saving to the model and retrieving from it saves to the backend store 
   defined in your options.  Likewise, deleting the model triggers a callback to delete the element in the 
   associated store.
 
 = Configuration
 
-Currently supported backends include filesystem and S3.  The filesystem backend is just a flat store, mostly for testing purposes,
-as putting thousands of files in one directory just doesn't scale well.  Read through the yaml file included with the distribution as
-well as the spec suite to get a feel for how plugin configuration works.  You can define a default backend globally, and override it in
-individual models as needed (e.g., store one attribute in the filesystem and another in S3).
+Currently supported backends include filesystem and S3.  The filesystem backend is just a flat store, mostly for testing 
+purposes, as putting thousands of files in one directory just doesn't scale well.  The text below, in file config/hashpipe.yml,
+would configure various settings for different envronments in which your rails app may be run.
+
+  test:
+    storage: filesystem
+    s3:
+      bucket: test_archived_attributes
+      access_key: your access key
+      secret_key: your secret key
+      protocol: https
+  
+  development:
+    storage: memcache
+    memcache:
+      server: localhost
+      port: 1978
+
+You can define a default backend globally, and override it in individual models as needed (e.g., store one attribute in the filesystem and another 
+in S3).
 
 = Extension
 
-HashPipe is written in such a way that additional key-value storage backends should be able to be added rather easily.
-
-= Caveats
-
-There could be network issues saving your attribute to a backend store such as S3.  Because ArchivedAttributes works by defining callbacks on your model, it may result in your model not being saved if a network error is raised in the transaction block defined for the saving of your record.  You should probably work around this by trying the save operation again using a rescue block.  There may also be changes to the behavior of the code in this area in the future.
+HashPipe is written in such a way that additional key-value storage backends should be able to be added rather easily.  Check the HashPipe::Backends
+modules for more information.
 
 = Author
 

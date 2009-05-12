@@ -16,6 +16,13 @@ describe HashPipe::ArchivedAttribute do
       @aa.value = 'stuff'
       @aa.should be_dirty
     end
+    
+    it "should not be dirty after save is called" do
+      @aa.value = 'stuff'
+      @aa.should be_dirty
+      @aa.save
+      @aa.should_not be_dirty      
+    end
   end
 
   describe "#marshal?" do

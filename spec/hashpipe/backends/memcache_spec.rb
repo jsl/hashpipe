@@ -24,7 +24,7 @@ describe HashPipe::Backends::Memcache do
 
   describe "#load" do
     it "should call method to load data from memcached" do
-      @mock_store.expects(:get)
+      @mock_store.expects(:read)
       @mc.load
     end
   end
@@ -40,6 +40,17 @@ describe HashPipe::Backends::Memcache do
     it "should call method to delete key" do
       @mock_store.expects(:delete)
       @mc.destroy
+    end
+  end
+  
+  describe  "#server" do
+    before do
+      @backend = HashPipe::Backends::Memcache.new(:foo)
+    end
+    
+    it "should return server:port" do
+      @backend.instance_variable_set(:@config, :memcache => {:server => 'foo', :port => 1978})
+      @backend.__send__(:server).should == "foo:1978"
     end
   end
 end

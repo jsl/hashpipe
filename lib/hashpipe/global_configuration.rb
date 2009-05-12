@@ -16,7 +16,8 @@ module HashPipe
         :archive_root => nil
       },
       :memcache => {
-        :port => 1978
+        :port   => 1978,
+        :server => 'localhost'
       }
     })
     

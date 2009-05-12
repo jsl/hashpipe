@@ -17,13 +17,13 @@ module HashPipe
       end
 
       def load
-        cache.get(key_name)
+        cache.read(key_name)
       end
 
       private
 
       def cache
-        @cache ||= ActiveSupport::Cache::MemCacheStore.new(@config[:port])
+        @cache ||= ActiveSupport::Cache::MemCacheStore.new(server)
       end
 
       def key_name
@@ -31,6 +31,11 @@ module HashPipe
           @archived_attribute.name,
           @archived_attribute.instance.uuid ].join('/')
       end
+
+      def server
+        "#{@config[:server]}:#{@config[:port]}" 
+      end
+      
     end
 
   end

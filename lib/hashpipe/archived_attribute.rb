@@ -41,6 +41,7 @@ module HashPipe
     # error, we capture it and add it to the AR validation errors.
     def save
       @backend.save(@stashed_value) if self.dirty?
+      @dirty = false
     end
 
     def destroy
