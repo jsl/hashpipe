@@ -49,7 +49,7 @@ describe HashPipe::Backends::Memcache do
     end
     
     it "should return server:port" do
-      @backend.instance_variable_set(:@config, :memcache => {:server => 'foo', :port => 1978})
+      @backend.instance_variable_set(:@config, {:server => 'foo', :port => 1978})
       @backend.__send__(:server).should == "foo:1978"
     end
   end
