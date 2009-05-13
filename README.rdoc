@@ -1,7 +1,7 @@
 = HashPipe
 
-Transparently maintains an attribute of an ActiveRecord-backed model in a separate key-value data structure such 
-as S3, memcached, Tokyo Cabinet, or the filesystem using xattrs.
+Transparently maintains an attribute of an ActiveRecord-backed model in a separate key-value data store such 
+as Amazon S3, memcached, Tokyo Cabinet, or the filesystem.
 
 == Description
 
@@ -60,7 +60,7 @@ configuration file 'hashpipe.yml':
   test:
     moneta_klass: Moneta::Memory
 
-  test:
+  development:
     moneta_klass: Moneta::Memcache
     moneta_options: 
       server: localhost:1978
