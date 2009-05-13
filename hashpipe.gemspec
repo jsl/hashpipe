@@ -1,7 +1,7 @@
 Gem::Specification.new do |s|
   s.name     = "hashpipe"
-  s.version  = "0.0.4"
-  s.date     = "2009-05-12"
+  s.version  = "0.0.5"
+  s.date     = "2009-05-13"
   s.summary  = "ActiveRecord plugin to save content to a pluggable, hash-style backend"
   s.email    = "justin@phq.org"
   s.homepage = "http://github.com/jsl/hashpipe"
