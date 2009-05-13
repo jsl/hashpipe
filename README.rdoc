@@ -1,9 +1,7 @@
 = HashPipe
 
-== Summary
-
-HashPipe - Transparently maintains an attribute of an ActiveRecord-backed model in a separate key-value data structure 
-such as S3, memcached, Tokyo Cabinet, or the filesystem using xattrs.
+Transparently maintains an attribute of an ActiveRecord-backed model in a separate key-value data structure such 
+as S3, memcached, Tokyo Cabinet, or the filesystem using xattrs.
 
 == Description
 
