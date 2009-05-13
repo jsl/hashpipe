@@ -11,13 +11,14 @@ backed model.  In this sense, it acts as a pipe from the ActiveRecord model to a
 It functions by hooking into the native callbacks provided by ActiveRecord models.  HashPipe keeps track of when the 
 hashed attribute has been written to, and flushes it out to the external data source on saves of the ActiveRecord
 model.  Hashed attributes are lazy-loaded, so they aren't pulled from the external data source until they're requested.
-Finally, when the ActiveRecord model is deleted, the hashed attribute for that model are also deleted automatically.
+Finally, when the ActiveRecord model is deleted, the hashed attributes for that model are also deleted automatically.
 
-HashPipe also supports transparent gzip compression/decompression of attribute data and serialization/deserialization 
+HashPipe supports transparent gzip compression/decompression of attribute data and serialization/deserialization 
 using Marshal in case you wish to store Ruby objects in the attribute.
 
-HashPipe uses Moneta, which is a universal library for key-value storage systems.  This means that it supports
-all of the backend storage types supported by this common library, and that new backends are added regularly.
+The backend of HashPipe is implemented using Moneta, which is a universal library for key-value storage systems.  
+This means that it supports all of the backend storage types supported by this common library, and that new 
+backends are added regularly.
 
 = Use Cases
 
