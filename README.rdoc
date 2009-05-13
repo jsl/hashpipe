@@ -1,9 +1,11 @@
-= Name
+= HashPipe
+
+== Summary
 
 HashPipe - Transparently maintains an attribute of an ActiveRecord-backed model in a separate key-value data structure 
 such as S3, memcached, Tokyo Cabinet, or the filesystem using xattrs.
 
-= Description
+== Description
 
 HashPipe makes it easy to use an external key-value based data storage system alongside a traditional ActiveRecord-
 backed model.  In this sense, it acts as a pipe from the ActiveRecord model to a hash - a hash pipe!
@@ -20,7 +22,7 @@ The backend of HashPipe is implemented using Moneta, which is a universal librar
 This means that it supports all of the backend storage types supported by this common library, and that new 
 backends are added regularly.
 
-= Use Cases
+== Use Cases
 
 There are certain cases where it makes more sense to store data objects in a separate storage system from the RDBMS:
 
@@ -52,7 +54,7 @@ Getting started with HashPipe is easy.
   defined in your options.  Likewise, deleting the model triggers a callback to delete the element in the 
   associated store.
 
-= Configuration
+== Configuration
 
 HashPipe supports the backends supported by Moneta.  Configure the backend that you want to use in your YAML 
 configuration file 'hashpipe.yml':
@@ -68,6 +70,6 @@ configuration file 'hashpipe.yml':
 You can define a default backend globally, and override it in individual models as needed (e.g., store one 
 attribute in the filesystem and another in S3).
 
-= Author
+== Author
 
 Justin S. Leitgeb, <justin@phq.org>
