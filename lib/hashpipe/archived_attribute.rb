@@ -1,8 +1,7 @@
 require 'activesupport'
+require 'moneta'
 
-require File.expand_path(File.join(File.dirname(__FILE__),  %w[ backends filesystem ]))
-require File.expand_path(File.join(File.dirname(__FILE__),  %w[ backends s3 ]))
-require File.expand_path(File.join(File.dirname(__FILE__),  %w[ backends memcache ]))
+require File.expand_path(File.join(File.dirname(__FILE__),  'moneta_backend'))
 
 module HashPipe
   
@@ -13,11 +12,8 @@ module HashPipe
       @name     = name
       @instance = instance
       @dirty    = false
-
-      @_options = HashPipe::GlobalConfiguration.instance.to_hash.
-        merge(opts)
-
-      @backend = instantiate_backend_from(options)
+      @_options = HashPipe::GlobalConfiguration.instance.to_hash.merge(opts)
+      @backend  = instantiate_backend_from(options)
     end
     
     def value
@@ -51,8 +47,7 @@ module HashPipe
     # Returns a backend object based on the options given (e.g., filesystem,
     # s3).
     def instantiate_backend_from(options)
-      "HashPipe::Backends::#{options[:storage].to_s.camelize}".
-        constantize.new(self)
+      HashPipe::MonetaBackend.new(self)
     end
 
     def options

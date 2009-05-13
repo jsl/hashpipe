@@ -6,19 +6,9 @@ module HashPipe
     include Singleton
 
     DEFAULTS = HashWithIndifferentAccess.new({
-      :storage    => 'filesystem',
-      :marshal    => false,
-      :compress   => false,
-      :s3 => {
-        :protocol => 'https'
-      },
-      :filesystem => {
-        :archive_root => nil
-      },
-      :memcache => {
-        :port   => 1978,
-        :server => 'localhost'
-      }
+      :moneta_klass => 'Moneta::Memory',
+      :marshal      => false,
+      :compress     => false
     })
     
     def [](val)

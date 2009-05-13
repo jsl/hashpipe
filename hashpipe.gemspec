@@ -1,6 +1,6 @@
 Gem::Specification.new do |s|
   s.name     = "hashpipe"
-  s.version  = "0.0.3"
+  s.version  = "0.0.4"
   s.date     = "2009-05-12"
   s.summary  = "ActiveRecord plugin to save content to a pluggable, hash-style backend"
   s.email    = "justin@phq.org"
@@ -16,18 +16,14 @@ Gem::Specification.new do |s|
     "lib/hashpipe.rb",
     "lib/hashpipe/archived_attribute.rb",
     "lib/hashpipe/global_configuration.rb",
-    "lib/hashpipe/backends/s3.rb",
-    "lib/hashpipe/backends/memcache.rb",
-    "lib/hashpipe/backends/filesystem.rb"
+    "lib/hashpipe/moneta_backend.rb"
   ]
   s.test_files = [
     "spec/hashpipe/global_configuration_spec.rb",
     "spec/hashpipe/archived_attribute_spec.rb",
-    "spec/hashpipe/backends/filesystem_spec.rb",
-    "spec/hashpipe/backends/s3_spec.rb",
-    "spec/hashpipe/backends/memcache_spec.rb"
+    "spec/hashpipe/moneta_backend_spec.rb"
   ]
+  s.add_dependency("wycats-moneta", ["> 0.0.0"])
   s.add_dependency("activesupport", ["> 0.0.0"])
-  s.add_dependency("right_aws", ["> 0.0.0"])
   s.add_dependency("assaf-uuid", ["> 0.0.0"])
 end

@@ -47,10 +47,6 @@ describe HashPipe do
     }.should_not change(@bear_story, :uuid)
   end
 
-  it "should still be able to retrieve the same content for the attribute after reloading" do
-    Story.find(@lamb_story.id).content.should == @lamb_text
-  end
-
   [:generate_uuid, :save_archived_attributes, :destroy_archived_attributes].each do |sym|
     it "should respond to attached storage method #{sym}" do
       Story.new.should respond_to(sym)

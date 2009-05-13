@@ -1,17 +1,31 @@
 = Name
 
-HashPipe - Transparently maintains an attribute of an ActiveRecord backed model in a separate key-value data structure 
-such as S3 or Tokyo Cabinet.
+HashPipe - Transparently maintains an attribute of an ActiveRecord-backed model in a separate key-value data structure 
+such as S3, memcached, Tokyo Cabinet, or the filesystem using xattrs.
 
 = Description
 
-HashPipe allows you to have an attribute of an existing ActiveRecord (AR)-backed class stored in a separate system, such as S3 or Tokyo Cabinet (currently accessed through the memcached protocol to Tokyo Tyrant).  In this sense, it provides a pipe from an AR object to a hash - a hash pipe!
+HashPipe allows you to have an attribute of an existing ActiveRecord (AR)-backed class stored in a separate system, 
+such as S3 or Tokyo Cabinet (currently accessed through the memcached protocol to Tokyo Tyrant).  In this sense, 
+it provides a pipe from an AR object to a hash - a hash pipe!
 
-HashPipe supports transparent gzip compression/decompression of attribute data and serialization/deserialization using Marshal in case you wish to store Ruby objects in the attribute.
+HashPipe also supports transparent gzip compression/decompression of attribute data and serialization/deserialization 
+using Marshal in case you wish to store Ruby objects in the attribute.
+  
+It functions by hooking into the native callbacks provided by ActiveRecord models.  HashPipe keeps track of when the 
+hashed attribute has been written to, and flushes it out to the external data source on saves of the activerecord
+model.  Hashed attributes are lazy-loaded, so they aren't pulled from the external data source until they're requested.
+Finally, when the ActiveRecord model is deleted, the hashed attribute for that model is deleted automatically.
 
-= Project Status
+HashPipe uses Moneta, which is a universal library for key-value storage systems.  This means that it supports
+all of the backend storage types supported by this common library, and that new backends are added regularly.
 
-This plugin is being released as an "alpha" product.  It seems to work, but needs refinement to be considered production-ready.
+= Use Cases
+
+There are certain cases where it makes more sense to store data objects in a separate storage system from the RDBMS:
+
+* Certain parts of your data set require frequent reads and writes, and need to be fast without the ACID RDBMS overhead
+* You store large objects, and don't want to worry about increasing the size of your RDBMS when the size grows out of the space you've allocated
 
 = Quick Start
 
@@ -37,36 +51,20 @@ This plugin is being released as an "alpha" product.  It seems to work, but need
 
 = Configuration
 
-Currently supported backends include filesystem and S3.  The filesystem backend is just a flat store, mostly for testing 
-purposes, as putting thousands of files in one directory just doesn't scale well.  The text below, in file config/hashpipe.yml,
-would configure various settings for different envronments in which your rails app may be run.
+HashPipe supports the backends supported by Moneta.  Configure the backend that you want to use in your YAML 
+configuration file 'hashpipe.yml':
 
   test:
-    storage: filesystem
-    s3:
-      bucket: test_archived_attributes
-      access_key: your access key
-      secret_key: your secret key
-      protocol: https
-  
-  development:
-    storage: memcache
-    memcache:
-      server: localhost
-      port: 1978
+    moneta_klass: Moneta::Memory
 
-You can define a default backend globally, and override it in individual models as needed (e.g., store one attribute in the filesystem and another 
-in S3).
+  test:
+    moneta_klass: Moneta::Memcache
+    moneta_options: 
+      server: localhost:1978
 
-= Extension
-
-HashPipe is written in such a way that additional key-value storage backends should be able to be added rather easily.  Check the HashPipe::Backends
-modules for more information.
+You can define a default backend globally, and override it in individual models as needed (e.g., store one 
+attribute in the filesystem and another in S3).
 
 = Author
 
 Justin S. Leitgeb, <justin@phq.org>
-
-= Credits
-
-Some of the parts of this plugin were inspired by the Paperclip plugin, which allows you to easily attach files to your ActiveRecord models.
