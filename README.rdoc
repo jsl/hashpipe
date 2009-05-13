@@ -36,8 +36,6 @@ Getting started with HashPipe is easy.
 
     config.gem "jsl-hashpipe", :lib => 'hashpipe', :source => 'http://gems.github.com'
 
-* Add a column :uuid of type String, unique to the table where you want to use an hashpipe attribute (hattr)
-
 * If you wanted to serialize an attribute 'elephant' in model Foo, you would call hattr :elephant in your model.  
   For example, class 'Foo' may look like:
 

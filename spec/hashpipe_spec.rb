@@ -47,7 +47,7 @@ describe HashPipe do
     }.should_not change(@bear_story, :uuid)
   end
 
-  [:generate_uuid, :save_archived_attributes, :destroy_archived_attributes].each do |sym|
+  [:save_archived_attributes, :destroy_archived_attributes].each do |sym|
     it "should respond to attached storage method #{sym}" do
       Story.new.should respond_to(sym)
     end

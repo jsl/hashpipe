@@ -34,7 +34,7 @@ module HashPipe
     def key_name
       [ table_name_from(@archived_attribute),
         @archived_attribute.name,
-        @archived_attribute.instance.uuid ].join('/')
+        @archived_attribute.instance.id ].join('/')
     end
     
     def table_name_from(archived_attribute)

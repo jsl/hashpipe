@@ -1,8 +1,6 @@
 require File.expand_path(File.join(File.dirname(__FILE__), %w[hashpipe archived_attribute] ))
 require File.expand_path(File.join(File.dirname(__FILE__), %w[hashpipe global_configuration] ))
 
-require 'uuid'
-
 module HashPipe
 
   def self.included(base)
@@ -20,8 +18,7 @@ module HashPipe
       if archived_attribute_definitions.nil?
         write_inheritable_attribute(:archived_attribute_definitions, {})
 
-        before_save :generate_uuid
-        before_save :save_archived_attributes
+        after_save :save_archived_attributes
         before_destroy :destroy_archived_attributes
       end
       
@@ -70,10 +67,6 @@ module HashPipe
       each_archived_stash do |name, stash|
         stash.__send__(:destroy)
       end
-    end
-
-    def generate_uuid
-      self.uuid = UUID.new.generate if self.new_record?
     end
 
   end
